@@ -4,4 +4,5 @@ GOOGLE_TOKEN_URI = 'https://oauth2.googleapis.com/token'
 name = "aiogc"
 __version__ = '0.1.1'
 
-from . import events, models
+from . import events
+from models import Credentials, Event, Time, Person

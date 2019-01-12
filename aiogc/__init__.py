@@ -5,4 +5,4 @@ name = "aiogc"
 __version__ = '0.1.1'
 
 from . import events
-from models import Credentials, Event, Time, Person
+from .models import Credentials, Event, Time, Person

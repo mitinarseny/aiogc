@@ -110,7 +110,7 @@ class Event:
 
 
 @dataclass
-class _FreeBusyTime:
+class Interval:
     start: str = NoAsDict
     end: str = NoAsDict
 
@@ -118,12 +118,12 @@ class _FreeBusyTime:
 @dataclass
 class _FreeBusyCalendar:
     errors: typing.List[typing.Dict[str, str]] = NoAsDict
-    busy: typing.List[typing.Union[dict, _FreeBusyTime]] = NoAsDict
+    busy: typing.List[typing.Union[dict, Interval]] = NoAsDict
 
     def __post_init__(self):
         for i, b in enumerate(self.busy):
             if isinstance(b, dict):
-                self.busy[i] = _FreeBusyTime(**b)
+                self.busy[i] = Interval(**b)
 
 
 @dataclass

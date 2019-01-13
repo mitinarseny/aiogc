@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="aiogc",
-    version="0.1.4",
+    version="0.1.5",
     author="Arseny Mitin",
     author_email="mitinarseny@gmail.com",
     description="Async Google Calendar API Client",

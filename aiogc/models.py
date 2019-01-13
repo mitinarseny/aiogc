@@ -57,6 +57,7 @@ class Time:
     date: str = NoAsDict
     dateTime: str = NoAsDict
 
+
 @dataclass
 class Event:
     kind: str = NoAsDict
@@ -106,3 +107,39 @@ class Event:
             self.creator = Person(**self.creator)
         if isinstance(self.organizer, dict):
             self.organizer = Person(**self.organizer)
+
+
+@dataclass
+class _FreeBusyTime:
+    start: str = NoAsDict
+    end: str = NoAsDict
+
+
+@dataclass
+class _FreeBusyCalendar:
+    errors: typing.List[typing.Dict[str, str]] = NoAsDict
+    busy: typing.List[typing.Union[dict, _FreeBusyTime]] = NoAsDict
+
+    def __post_init__(self):
+        for i, b in enumerate(self.busy):
+            if isinstance(b, dict):
+                self.busy[i] = _FreeBusyTime(**b)
+
+
+@dataclass
+class FreeBusy:
+    kind: str = NoAsDict
+    timeMin: typing.Union[dict, Time] = NoAsDict
+    timeMax: typing.Union[dict, Time] = NoAsDict
+    groups: dict = NoAsDict
+    calendars: typing.Dict[str, _FreeBusyCalendar] = NoAsDict
+
+    def __post_init__(self):
+        if isinstance(self.timeMin, dict):
+            self.timeMin = Time(**self.timeMin)
+        if isinstance(self.timeMax, dict):
+            self.timeMax = Time(**self.timeMax)
+        if isinstance(self.calendars, dict):
+            for k, v in self.calendars.items():
+                if isinstance(v, dict):
+                    self.calendars[k] = _FreeBusyCalendar(**v)

@@ -17,8 +17,6 @@ async def list(*,
                session: aiohttp.ClientSession,
                version: str = 'v3',
                **params) -> typing.Generator[Event, None, None]:
-    if not credentials.is_fresh():
-        await credentials.refresh(session)
     async with session.get(
             url=f'{GOOGLEAPIS_BASE_URL}/calendar/{version}/calendars/{calendar_id}/events',
             params=params,
